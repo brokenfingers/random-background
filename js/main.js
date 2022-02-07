@@ -9,3 +9,28 @@ for (let i = 0; i < holderWidth * 20; i += 10) {
     newRect.classList.add('rectangle');
     holder.appendChild(newRect);
 }
+
+function wait(ms) {
+    var start = new Date().getTime();
+    var end = start;
+    while (end < start + ms) {
+        end = new Date().getTime();
+    }
+}
+
+const rectArray = document.querySelectorAll('.rectangle');
+
+let d = 0;
+function changeColor() {
+    setTimeout(() => {
+        console.log("labas");
+        if (d <= rectArray.length) {
+            rectArray[d].style.backgroundColor = "red";
+            changeColor();
+            d++;
+        }
+
+    }, 3)
+}
+
+changeColor();
