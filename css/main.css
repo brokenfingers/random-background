@@ -21,11 +21,12 @@ body {
     width: 105%;
     height: 101%;
     overflow: hidden;
-    background-color: blue;
+    transition: all 6000ms;
 }
 
 .background-holder > * {
     width: 10px;
     height: 10px;
-    transition: all, 200ms;
+    transition: all, 600ms;
+    border-radius: 2px;
 }

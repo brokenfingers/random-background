@@ -1,12 +1,12 @@
 let holder = document.querySelector('.background-holder');
-const holderWidth = Math.ceil(holder.clientWidth / 10) * 10;
-const holderHeigth = Math.ceil(holder.clientHeight / 10);
 const rectSize = 10;
-let color = randomColor();
+const cellsInRow = Math.ceil(holder.clientWidth / rectSize);
+const numberOfRows = Math.ceil(holder.clientHeight / rectSize);
+let cellColor = randomColor();
 
-for (let i = 0; i < holderWidth * holderHeigth; i += 10) {
+for (let i = 0; i < cellsInRow * numberOfRows; i++) {
     const newRect = document.createElement('div');
-    newRect.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+    newRect.style.backgroundColor = `rgb(${cellColor[0]}, ${cellColor[1]}, ${cellColor[2]})`;
     newRect.classList.add('rectangle');
     holder.appendChild(newRect);
 }
@@ -15,7 +15,7 @@ holder.addEventListener("click", onHolderClick);
 
 
 function onHolderClick() {
-    color = randomColor();
+    cellColor = randomColor();
     rectArray = [];
     rectArray = [...document.querySelectorAll('.rectangle')];
     changeColor();
@@ -24,8 +24,18 @@ function onHolderClick() {
 function randomColor() {
     let arr = [];
     arr[0] = Math.floor(Math.random() * 256);
-    arr[1] = Math.floor(Math.random() * 256);
-    arr[2] = Math.floor(Math.random() * 256);
+    if (arr[0] < 56) {
+        arr[1] = Math.floor(Math.random() * 56) + 200;
+        arr[2] = Math.floor(Math.random() * 56) + 200;
+    } else if (arr[0] > 200) {
+        arr[1] = Math.floor(Math.random() * 56);
+        arr[2] = Math.floor(Math.random() * 56);
+    } else {
+        arr[1] = Math.floor(Math.random() * 200) + 56;
+        arr[2] = Math.floor(Math.random() * 200) + 56;
+    }
+
+
     return arr;
 }
 
@@ -36,10 +46,14 @@ function changeColor() {
     setTimeout(() => {
         if (rectArray.length > 0) {
             let randIndex = Math.floor(Math.random() * rectArray.length);
-            rectArray[randIndex].style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+            rectArray[randIndex].style.backgroundColor = `rgb(${cellColor[0]}, ${cellColor[1]}, ${cellColor[2]})`;
             rectArray.splice(randIndex, 1);
             changeColor();
+        } else {
+            holder.style.backgroundColor = `rgb(${cellColor[0]}, ${cellColor[1]}, ${cellColor[2]})`;
+            return;
         }
+
     }, 4)
 }
 
