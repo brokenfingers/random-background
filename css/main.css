@@ -1,0 +1,29 @@
+body,
+body * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+        sans-serif;
+}
+
+body {
+    background-color: aliceblue;
+    width: 100%;
+    height: 100vh;
+}
+
+.background-holder {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+}
+
+.rectangle {
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+}
