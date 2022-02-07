@@ -18,19 +18,18 @@ function wait(ms) {
     }
 }
 
-const rectArray = document.querySelectorAll('.rectangle');
+const rectArray = [...document.querySelectorAll('.rectangle')];
 
-let d = 0;
+
 function changeColor() {
     setTimeout(() => {
-        console.log("labas");
-        if (d <= rectArray.length) {
-            rectArray[d].style.backgroundColor = "red";
+        if (rectArray.length > 0) {
+            let randIndex = Math.floor(Math.random() * rectArray.length);
+            rectArray[randIndex].style.backgroundColor = "red";
+            rectArray.splice(randIndex, 1);
             changeColor();
-            d++;
         }
-
-    }, 3)
+    }, 0.2)
 }
 
 changeColor();
