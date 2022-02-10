@@ -29,6 +29,16 @@ function mouseGhost() {
 
 holder.addEventListener("click", onHolderClick);
 window.addEventListener("resize", onResize);
+window.addEventListener('keydown', stopColors);
+
+
+function stopColors(e) {
+    if (e.code != 'Escape') return;
+    holder.innerHTML = '';
+    rectArray = [];
+    fillBackground(rectArray);
+    cellColor = randomColor();
+}
 
 
 function onResize() {
