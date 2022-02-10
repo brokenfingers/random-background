@@ -1,23 +1,52 @@
 let holder = document.querySelector('.background-holder');
-const rectSize = 10;
-const cellsInRow = Math.ceil(holder.clientWidth / rectSize);
-const numberOfRows = Math.ceil(holder.clientHeight / rectSize);
+const rectSize = 5;
+let cellsInRow = Math.ceil(window.innerWidth / rectSize);
+let numberOfRows = Math.ceil(window.innerHeight / rectSize);
 let cellColor = randomColor();
+let rectArray = [];
 
-for (let i = 0; i < cellsInRow * numberOfRows; i++) {
-    const newRect = document.createElement('div');
-    newRect.style.backgroundColor = `rgb(${cellColor[0]}, ${cellColor[1]}, ${cellColor[2]})`;
-    newRect.classList.add('rectangle');
-    holder.appendChild(newRect);
+
+fillBackground(rectArray);
+
+function fillBackground(arr) {
+
+    for (let i = rectArray.length; i < cellsInRow * numberOfRows + 1; i++) {
+        const newRect = document.createElement('div');
+        newRect.style.backgroundColor = `rgb(${cellColor[0]}, ${cellColor[1]}, ${cellColor[2]})`;
+        newRect.classList.add('rectangle');
+        newRect.addEventListener('mouseleave', mouseGhost);
+        holder.appendChild(newRect);
+        rectArray.push(newRect);
+
+    }
+
 }
 
+function mouseGhost() {
+    this.style.backgroundColor = "#FFF";
+}
+
+
 holder.addEventListener("click", onHolderClick);
+window.addEventListener("resize", onResize);
+
+
+function onResize() {
+    cellsInRow = Math.ceil(window.innerWidth / rectSize);
+    numberOfRows = Math.ceil(window.innerHeight / rectSize);
+    holder.innerHTML = '';
+    rectArray = [];
+    fillBackground(rectArray);
+
+
+}
 
 
 function onHolderClick() {
-    cellColor = randomColor();
+    holder.innerHTML = '';
     rectArray = [];
-    rectArray = [...document.querySelectorAll('.rectangle')];
+    fillBackground(rectArray);
+    cellColor = randomColor();
     changeColor();
 }
 
@@ -39,14 +68,15 @@ function randomColor() {
     return arr;
 }
 
-let rectArray = [...document.querySelectorAll('.rectangle')];
-console.log(rectArray.length);
+
 
 function changeColor() {
     setTimeout(() => {
         if (rectArray.length > 0) {
             let randIndex = Math.floor(Math.random() * rectArray.length);
-            rectArray[randIndex].style.backgroundColor = `rgb(${cellColor[0]}, ${cellColor[1]}, ${cellColor[2]})`;
+            if (rectArray[randIndex].style.backgroundColor != "#FFF") {
+                rectArray[randIndex].style.backgroundColor = `rgb(${cellColor[0]}, ${cellColor[1]}, ${cellColor[2]})`;
+            }
             rectArray.splice(randIndex, 1);
             changeColor();
         } else {
@@ -57,4 +87,4 @@ function changeColor() {
     }, 4)
 }
 
-changeColor();
+// changeColor();
